@@ -17,7 +17,7 @@ const Manager = () => {
   }, []);
 
   const showPassword = () => {
-    passwordRef.current.type = "text"
+    passwordRef.current.type = "text";
     console.log(ref.current.src);
     // ref.current.src retrun a ulr, or say returns absolute url like
     // http://localhost:5173/icons/eye.png
@@ -25,28 +25,28 @@ const Manager = () => {
     const currentSrc = new URL(ref.current.src).pathname;
     if (currentSrc === "/icons/cross-eye.png") {
       ref.current.src = "/icons/eye.png";
-      passwordRef.current.type = "text"
+      passwordRef.current.type = "text";
     } else {
       ref.current.src = "/icons/cross-eye.png";
-      passwordRef.current.type = "password"
+      passwordRef.current.type = "password";
     }
   };
   // savePassword
   const savePassword = () => {
     console.log(form);
     const updatedPasswords = [...passwordArray, form];
-    setPasswordArray(updatedPasswords)
+    setPasswordArray(updatedPasswords);
     localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
     //if we'd have passed passwordArray, then it would have taken too much time
     console.log(updatedPasswords);
   };
 
   // showPasswordTable
-  const showPasswordTable = (index) =>{
-    setVisiblePassword((prev) =>({
-        ...prev,
-        [index]: !prev[index],
-    }))
+  const showPasswordTable = (index) => {
+    setVisiblePassword((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
   //  onChange handler
@@ -57,22 +57,20 @@ const Manager = () => {
   };
 
   // copy password to clipboard
-  const CopyToClipboard = async(text) => {
+  const CopyToClipboard = async (text) => {
     // const [clicked, setClicked] = useState(false);
     try {
-        await navigator.clipboard.writeText(text);
-        alert("Copied to clipboard!");
+      await navigator.clipboard.writeText(text);
+      alert("Copied to clipboard!");
     } catch (error) {
-        console.log("Failed to copy: ", error);
+      console.log("Failed to copy: ", error);
     }
   };
 
   // delete password with username as well as site
-  const deletePassword = async(index) => {
+  const deletePassword = async (index) => {
     setPasswordArray(passwordArray.filter((val, i) => i !== index));
-  }
-
-
+  };
 
   return (
     <>
@@ -148,48 +146,110 @@ const Manager = () => {
         <div className="passwords">
           <h2 className="font-bold text-xl py-4 text-center">Your Passwords</h2>
           {passwordArray.length === 0 && <div>No Passwords To Show</div>}
-          {
-            passwordArray.length !== 0 && 
+          {passwordArray.length !== 0 && (
             <table className="table-auto w-full rounded-xl overflow-hidden">
-                <thead className="bg-green-800 text-white">
+              <thead className="bg-green-800 text-white">
                 <tr>
-                    <th className="py-2">Site</th>
-                    <th className="py-2">UserName</th>
-                    <th className="py-2">Password</th>
+                  <th className="py-2">Site</th>
+                  <th className="py-2">UserName</th>
+                  <th className="py-2">Password</th>
                 </tr>
-                </thead>
-                <tbody className="bg-green-100">
-                    {passwordArray.map((item, index) =>{
-                        return <tr key={index}>
-                                    <td className="py-2 border border-white text-center min-w-32">
-                                        <div className="flex items-center justify-center gap-2">
-                                        <a href={item.site} target="_blank">{item.site}</a>
-                                    {/* copy button */}
-                                    <button onClick={()=>{CopyToClipboard(item.password)}} className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"><img className="w-5 py-1" src="/icons/copy_icon.png" alt="copy-icon"/></button>
-                                    </div>
-                                    </td>
-                                    <td className="py-2 border border-white text-center min-w-32">
-                                        <div className="flex items-center justify-center gap-2">
-                                        {item.username}
-                                        {/* copy button */}
-                                        <button onClick={()=>{CopyToClipboard(item.password)}} className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"><img className="w-5 py-1" src="/icons/copy_icon.png" alt="copy-icon"/></button>
-                                        </div>
-                                    </td>
-                                    <td className="py-2 border border-white text-center justify-center items-center min-w-32">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <span>{visiblePassword[index] ? item.password: "********"}</span>
-                                        <button onClick={() => showPasswordTable(index)}><img className="w-7 cursor-pointer bg-green-600 rounded-lg py-1 px-1 active:bg-green-900" src={visiblePassword[index] ? "/icons/eye.png": "/icons/cross-eye.png"} alt="eye" onClick={showPasswordTable}/></button>
-                                        {/* copy button */}
-                                        <button onClick={()=>{CopyToClipboard(item.password)}} className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"><img className="w-5 py-1" src="/icons/copy_icon.png" alt="copy-icon"/></button>
-                                        {/* delete button */}
-                                        <button onClick={()=>{deletePassword(index)}} className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"><img className="w-5 py-1" src="/icons/delete_icon.png" alt="copy-icon"/></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                    })}
-                </tbody>
+              </thead>
+              <tbody className="bg-green-100">
+                {passwordArray.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="py-2 border border-white text-center min-w-32">
+                        <div className="flex items-center justify-center gap-2">
+                          <a href={item.site} target="_blank">
+                            {item.site}
+                          </a>
+                          {/* copy button */}
+                          <button
+                            onClick={() => {
+                              CopyToClipboard(item.password);
+                            }}
+                            className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"
+                          >
+                            <img
+                              className="w-5 py-1"
+                              src="/icons/copy_icon.png"
+                              alt="copy-icon"
+                            />
+                          </button>
+                        </div>
+                      </td>
+                      <td className="py-2 border border-white text-center min-w-32">
+                        <div className="flex items-center justify-center gap-2">
+                          {item.username}
+                          {/* copy button */}
+                          <button
+                            onClick={() => {
+                              CopyToClipboard(item.password);
+                            }}
+                            className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"
+                          >
+                            <img
+                              className="w-5 py-1"
+                              src="/icons/copy_icon.png"
+                              alt="copy-icon"
+                            />
+                          </button>
+                        </div>
+                      </td>
+                      <td className="py-2 border border-white text-center justify-center items-center min-w-32">
+                        <div className="flex items-center justify-center gap-2">
+                          <span>
+                            {visiblePassword[index]
+                              ? item.password
+                              : "********"}
+                          </span>
+                          <button onClick={() => showPasswordTable(index)}>
+                            <img
+                              className="w-7 cursor-pointer bg-green-600 rounded-lg py-1 px-1 active:bg-green-900"
+                              src={
+                                visiblePassword[index]
+                                  ? "/icons/eye.png"
+                                  : "/icons/cross-eye.png"
+                              }
+                              alt="eye"
+                              onClick={showPasswordTable}
+                            />
+                          </button>
+                          {/* copy button */}
+                          <button
+                            onClick={() => {
+                              CopyToClipboard(item.password);
+                            }}
+                            className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"
+                          >
+                            <img
+                              className="w-5 py-1"
+                              src="/icons/copy_icon.png"
+                              alt="copy-icon"
+                            />
+                          </button>
+                          {/* delete button */}
+                          <button
+                            onClick={() => {
+                              deletePassword(index);
+                            }}
+                            className="cursor-pointer bg-green-600 rounded-md justify-center items-center px-2 active:bg-green-800"
+                          >
+                            <img
+                              className="w-5 py-1"
+                              src="/icons/delete_icon.png"
+                              alt="copy-icon"
+                            />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
             </table>
-            }
+          )}
         </div>
       </div>
     </>
