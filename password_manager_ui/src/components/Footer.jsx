@@ -8,8 +8,8 @@ const Footer = () => {
         Pass
         <span className="text-green-700">OP/&gt;</span>
       </div>
-      <div className="flex justify-cneter items-center">
-        Created with <img className="w-6 mx-2 py-3" src="/icons/heart_icon.gif" alt="heart" />
+      <div className="flex justify-cneter items-center m-1">
+        Created with <img className="w-6 mx-2 bg-white" src="/icons/working-with-a-laptop.png" alt="heart" />
       </div>
     </div>
   );

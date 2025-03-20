@@ -29,10 +29,13 @@ const Navbar = () => {
           </li>
         </ul>
         {/* github icon */}
+        <a href="https://github.com/haseeb-505" target="_blank">
         <button className="text-white rounded-full h-12 px-1 flex gap-1 justify-between items-center bg-green-700 cursor-pointer">
           <img className="invert w-10" src="/icons/github-icon-svg.svg" alt="github_logo"/>
           <span className="font-bold">GitHub</span>
+          
         </button>
+        </a>
       </div>
     </nav>
   );
