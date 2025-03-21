@@ -87,7 +87,7 @@ const Manager = () => {
 
   return (
     <>
-      <div className="myContainer">
+      <div className="myContainer pb-20 pt-20">
         <h1 className="text-xl md:text-2xl lg:text-4xl font-bold text-center">
           <span className="text-green-700">&lt;</span>
           Pass
