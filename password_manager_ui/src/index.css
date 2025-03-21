@@ -2,6 +2,6 @@
 
 @layer components {
     .myContainer {
-        @apply container px-20 py-16 mx-auto;
+        @apply container px-2 md:px-10 lg:px-20 py-8 md:py-16 lg:py-16 mx-auto;
     }
 }

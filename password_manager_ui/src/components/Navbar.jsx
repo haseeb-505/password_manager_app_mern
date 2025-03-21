@@ -13,7 +13,7 @@ const Navbar = () => {
             Pass
             <span className="text-green-700">OP/&gt;</span>
         </div>
-        {/* menur for small screens */}
+        {/* menu for small screens */}
         <div className="md:hidden">
           <button onClick={()=> setIsMenuOpne(!isMenuOpne)} className="text-white focus:outline-none">
             {isMenuOpne ? <X size={32}/> : <Menu size={32}/>}
