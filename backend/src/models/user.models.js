@@ -31,10 +31,10 @@ const userSchema = new Schema({
     refreshToken: {
         type: String,
     },
-    passwordRecords: {
-        type: Schema.Types.ObjectId,
-        ref: "password"
-    }
+    // passwordRecords: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "PasswordRecord",
+    // }
 },{timestamps: true});
 
 // password encryption
