@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 // import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const Manager = () => {
@@ -8,6 +10,7 @@ const Manager = () => {
   const passwordRef = useRef();
   const [form, setForm] = useState({ site: "", username: "", password: "" });
   const [passwordArray, setPasswordArray] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     let passwords = localStorage.getItem("passwords");
@@ -18,29 +21,75 @@ const Manager = () => {
 
   const showPassword = () => {
     passwordRef.current.type = "text";
-    console.log(ref.current.src);
+    // console.log(ref.current.src);
     // ref.current.src retrun a ulr, or say returns absolute url like
     // http://localhost:5173/icons/eye.png
     // so we need to extract the path from this url
     const currentSrc = new URL(ref.current.src).pathname;
-    if (currentSrc === "/icons/cross-eye.png") {
-      ref.current.src = "/icons/eye.png";
+
+    // Construct correct paths dynamically
+    let eyeIcon = `${import.meta.env.BASE_URL}/icons/eye.png`;
+    let crossEyeIcon = `${import.meta.env.BASE_URL}/icons/cross-eye.png`;
+    // console.log("Eye icons is: ", eyeIcon) // Eye icons is:  //icons/eye.png
+
+    if (eyeIcon.includes("//icons")) {
+      eyeIcon = `${import.meta.env.BASE_URL}icons/eye.png`;
+    }
+
+    if (crossEyeIcon.includes("//icons")) {
+      crossEyeIcon = `${import.meta.env.BASE_URL}icons/cross-eye.png`;
+    }
+
+    // console.log("Eye icons is: ", eyeIcon)
+    // console.log("Cross Eye icon is: ", crossEyeIcon);
+
+    if (currentSrc.endsWith("cross-eye.png")) {
+      console.log("hello");
+      ref.current.src = eyeIcon;
       passwordRef.current.type = "text";
     } else {
-      ref.current.src = "/icons/cross-eye.png";
+      ref.current.src = crossEyeIcon;
       passwordRef.current.type = "password";
     }
   };
   // savePassword
   const savePassword = () => {
-    console.log(form);
+    // console.log(form);
     const updatedPasswords = [...passwordArray, form];
     setPasswordArray(updatedPasswords);
     localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
     //if we'd have passed passwordArray, then it would have taken too much time
-    console.log(updatedPasswords);
+    // console.log(updatedPasswords);
     // clear the input forms
-    setForm({ site: "", username: "", password: "" })
+    setForm({ site: "", username: "", password: "" });
+
+    // change the value of isEditing back to false if it is alreay true
+    if (isEditing) {
+      setIsEditing(false);
+      // also pass the alert message to show password is updated
+      toast.success("Password edited successfully!!!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      // pass the simple toast for saving password which in not being edited
+      toast.success("Your passowrd is saved!!!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   // showPasswordTable
@@ -71,19 +120,39 @@ const Manager = () => {
 
   // delete password with username as well as site
   const deletePassword = async (index) => {
-    setPasswordArray(passwordArray.filter((val, i) => i !== index));
+    const confirmDelete = window.confirm(
+      "Do you really want to delete this password!"
+    );
+    if (confirmDelete) {
+      setPasswordArray(passwordArray.filter((val, i) => i !== index));
+      // toast here
+      toast.warn("Your password is deleted", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   // edit password
-  const editPassword = (id) =>{
-    const editRecord = passwordArray.filter((val, record_id) => record_id === id);
-    console.log("Type of edit record is: ", typeof editRecord);
-    console.log("Type of edit record is: ", editRecord[0]);
+  const editPassword = (id) => {
+    const editRecord = passwordArray.filter(
+      (val, record_id) => record_id === id
+    );
     // set these values in form
     setForm(editRecord[0]);
     // delete this record so that record does not get repeated for same site and same user
-    setPasswordArray(passwordArray.filter((val, record_id) => record_id !== id));
-  }
+    setPasswordArray(
+      passwordArray.filter((val, record_id) => record_id !== id)
+    );
+    // update the button status to Add Edited Password\
+    setIsEditing(true);
+  };
 
   return (
     <>
@@ -97,6 +166,7 @@ const Manager = () => {
           Your Own password manager
         </p>
         <div className="flex flex-col p-4 text-black gap-4 items-center w-full">
+          <div>{isEditing ? "Edit Your Password" : null}</div>
           <input
             className="rounded-full bg-white border border-green-500 w-full md:w-3/4 p-4 py-1 text-sm md:text-base"
             type="text"
@@ -135,7 +205,8 @@ const Manager = () => {
                   ref={ref}
                   className="p-1"
                   width={30}
-                  src="icons/eye.png"
+                  src={`${import.meta.env.BASE_URL}/icons/eye.png`}
+                  onError={(e) => (e.currentTarget.src = "/icons/eye.png")}
                   alt="eye-icon"
                 />
               </span>
@@ -144,13 +215,14 @@ const Manager = () => {
 
           <button
             onClick={savePassword}
+            // when save password function is called, it shall change the isEditing value back to false
             className="flex gap-1 md:gap-2 justify-center items-center bg-green-600 rounded-full px-2 md:px-4 py-2 w-fit text-sm md:text-base font-semibold hover:bg-green-500 border-2 broder-green-700 hover:cursor-pointer active:bg-green-900"
           >
             <lord-icon
               src="https://cdn.lordicon.com/jgnvfzqg.json"
               trigger="hover"
             ></lord-icon>
-            Add Password
+            {isEditing ? "Save Edited Password" : "Add Password"}
           </button>
         </div>
         {/* table to show the user's password */}
@@ -181,9 +253,11 @@ const Manager = () => {
                         <td className="py-2 border border-white text-center min-w-24 px-0 md:px-2">
                           <div className="flex items-center justify-center gap-1 md:gap-2">
                             <a href={item.site} target="_blank">
-                              {item.site.length > 7 && (item.site.includes("https://") || item.site.includes("http://"))
+                              {item.site.length > 7 &&
+                              (item.site.includes("https://") ||
+                                item.site.includes("http://"))
                                 ? item.site.slice(7, 14) + "..."
-                                : item.site.slice(0,7) + "..."}
+                                : item.site.slice(0, 7) + "..."}
                             </a>
                             {/* Copy Button */}
                             <button
@@ -194,7 +268,10 @@ const Manager = () => {
                             >
                               <img
                                 className="w-4 md:w-5 py-1"
-                                src="/icons/copy_icon.png"
+                                src={`${
+                                  import.meta.env.BASE_URL
+                                }/icons/copy_icon.png`}
+                                onError={(e) => (e.currentTarget.src = "/icons/copy_icon.png")}
                                 alt="copy-icon"
                               />
                             </button>
@@ -216,7 +293,10 @@ const Manager = () => {
                             >
                               <img
                                 className="w-4 md:w-5 py-1"
-                                src="/icons/copy_icon.png"
+                                src={`${
+                                  import.meta.env.BASE_URL
+                                }/icons/copy_icon.png`}
+                                onError={(e) => (e.currentTarget.src = "/icons/copy_icon.png")}
                                 alt="copy-icon"
                               />
                             </button>
@@ -235,11 +315,12 @@ const Manager = () => {
                             <button onClick={() => showPasswordTable(index)}>
                               <img
                                 className="w-6 md:w-7 cursor-pointer bg-green-600 rounded-lg active:bg-green-900"
-                                src={
+                                src={`${import.meta.env.BASE_URL}/icons/${
                                   visiblePassword[index]
-                                    ? "/icons/eye.png"
-                                    : "/icons/cross-eye.png"
-                                }
+                                    ? "eye.png"
+                                    : "cross-eye.png"
+                                }`}
+                                onError={(e) => (e.currentTarget.src = `/icons/${visiblePassword[index] ? "eye.png" : "cross-eye.png"}`)}
                                 alt="eye"
                               />
                             </button>
@@ -252,7 +333,10 @@ const Manager = () => {
                             >
                               <img
                                 className="w-4 md:w-5 py-1"
-                                src="/icons/copy_icon.png"
+                                src={`${
+                                  import.meta.env.BASE_URL
+                                }/icons/copy_icon.png`}
+                                onError={(e) => (e.currentTarget.src = "/icons/copy_icon.png")}
                                 alt="copy-icon"
                               />
                             </button>
@@ -265,7 +349,10 @@ const Manager = () => {
                             >
                               <img
                                 className="w-4 md:w-5 py-1"
-                                src="/icons/edit-icon.png"
+                                src={`${
+                                  import.meta.env.BASE_URL
+                                }/icons/edit-icon.png`}
+                                onError={(e) => (e.currentTarget.src = "/icons/edit-icon.png")}
                                 alt="edit-icon"
                               />
                             </button>
@@ -278,7 +365,10 @@ const Manager = () => {
                             >
                               <img
                                 className="w-4 md:w-5 py-1"
-                                src="/icons/delete_icon.png"
+                                src={`${
+                                  import.meta.env.BASE_URL
+                                }/icons/delete_icon.png`}
+                                onError={(e) => (e.currentTarget.src = "/icons/delete_icon.png")}
                                 alt="copy-icon"
                               />
                             </button>
@@ -292,6 +382,18 @@ const Manager = () => {
             </div>
           )}
         </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </div>
     </>
   );

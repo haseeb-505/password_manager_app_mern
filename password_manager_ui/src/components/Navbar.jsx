@@ -15,7 +15,7 @@ const Navbar = () => {
         </div>
         {/* menu for small screens */}
         <div className="md:hidden">
-          <button onClick={()=> setIsMenuOpne(!isMenuOpne)} className="text-white focus:outline-none">
+          <button onClick={()=> setIsMenuOpne(!isMenuOpne)} className="text-white focus:outline-none cursor-pointer active:bg-green-800">
             {isMenuOpne ? <X size={32}/> : <Menu size={32}/>}
             {/* <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round"
@@ -48,7 +48,7 @@ const Navbar = () => {
         {/* github icon */}
         <a href="https://github.com/haseeb-505" target="_blank">
         <button className="text-white rounded-full h-12 px-1 flex gap-1 justify-between items-center bg-green-700 cursor-pointer">
-          <img className="invert w-10" src="/icons/github-icon-svg.svg" alt="github_logo"/>
+          <img className="invert w-10" src={`${import.meta.env.BASE_URL}/icons/github-icon-svg.svg`} onError={(e)=>(e.currentTarget.src="/icons/github-icon-svg.svg")} alt="github_logo"/>
           <span className="font-bold hidden md:block">GitHub</span>
           
         </button>

@@ -9,7 +9,7 @@ const Footer = () => {
         <span className="text-green-700">OP/&gt;</span>
       </div>
       <div className="flex justify-cneter items-center m-1">
-        Created with <img className="w-6 mx-2 bg-white" src="/icons/working-with-a-laptop.png" alt="heart" />
+        Created with <img className="w-6 mx-2 bg-white" src={`${import.meta.env.BASE_URL}/icons/working-with-a-laptop.png`} onError={(e) => (e.currentTarget.src = "/icons/working-with-a-laptop.png")} alt="heart" />
       </div>
     </div>
   );
