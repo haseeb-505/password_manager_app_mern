@@ -49,22 +49,22 @@ const registerUser = asyncHandler(async (req, res) =>{
     // check for user creation
     // return response
 
-    const [username, email, fullName, password, confirmPassword] = req.body;
+    const {username, email, fullName, password} = req.body;
     // check if any of these fields is empyt
-    if ([username, email, fullName, password, confirmPassword].some( (field) => field?.trim() = "")) {
+    if ([username, email, fullName, password].some( (field) => field?.trim() === "")) {
         throw new ApiError(400, "Please fill out all the fields")
     }
     // check if user already exists
-    const existingUser = User.findOne({
+    const existingUser = await User.findOne({
         $or: [{username}, {email}]
     });
     if (existingUser) {
         return res.status(400).json({message: "Either email or username already exists!!!"})
     }
     // password check
-    if (password!==confirmPassword) {
-        return res.status(400).json({message: "confirm password does not match"})
-    }
+    // if (password!==confirmPassword) {
+    //     return res.status(400).json({message: "confirm password does not match"})
+    // }
     // create user object now
     const user = await User.create({
         username: username.trim().toLowerCase(),
@@ -81,13 +81,18 @@ const registerUser = asyncHandler(async (req, res) =>{
     const createdUser = await User.findById(user._id).select("-password -refreshToken");
 
     // send a response to frontend
-    return res.status(202).json({message: `User ${user.username} is created Successfully!!!`})
+    return res.status(202).json(
+        new ApiResponse(200, 
+            createdUser, 
+            `User ${createdUser.username} is created Successfully!!!`
+        )
+    )
 });
 
 // loginUser
 const loginUser = asyncHandler(async (req, res) => {
     // get user details from frontend
-    const [username, email, password] = req.body;
+    const {username, email, password} = req.body;
     // check if both username and email are empty
     // one of them shall be present
     if (!username && !email ) {

@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookierParser from "cookie-parser";
+import { ApiError } from "./utils/ApiErrorHandler.js";
 
 const app = express();
 
@@ -21,5 +22,15 @@ app.use(express.static("public"));
 
 // cookierParser
 app.use(cookierParser());
+
+// error handling middleware for all routes
+// app.use(ApiError);
+
+// routes import
+import userRouter from "./routes/user.routes.js";
+
+
+// routes path
+app.use("/api/v1/users", userRouter)
 
 export {app};

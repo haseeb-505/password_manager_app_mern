@@ -1,1 +1,1 @@
-export const DB_NAME="passowrd_manager_backend"
+export const DB_NAME="PM_backend"
