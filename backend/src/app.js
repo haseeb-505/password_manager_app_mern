@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
 import cookierParser from "cookie-parser";
-import { ApiError } from "./utils/ApiErrorHandler.js";
+// import { ApiError } from "./utils/ApiErrorHandler.js";
 
 const app = express();
 
 // cors middleware
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin:  "http://localhost:5173",
     credentials: true,
 }));
 
@@ -23,11 +23,11 @@ app.use(express.static("public"));
 // cookierParser
 app.use(cookierParser());
 
-// error handling middleware for all routes
-// app.use(ApiError);
+
 
 // routes import
 import userRouter from "./routes/user.routes.js";
+
 
 
 // routes path
