@@ -31,16 +31,16 @@ const Navbar = () => {
             <a className="hover:font-bold" href="#">
               Home
             </a>
-            <a className="hover:font-bold" href="#">
-              Contact
+            <a className="hover:font-bold" href="/add-password">
+              Your Passowrds
             </a>
             <a className="hover:font-bold" href="#">
               About
             </a>
-            <a className="hover:font-bold" href="#">
+            <a className="hover:font-bold" href="/signup">
               SignUp
             </a>
-            <a className="hover:font-bold" href="#">
+            <a className="hover:font-bold" href="login">
               Sign In
             </a>
           </li>

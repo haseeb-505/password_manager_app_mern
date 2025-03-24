@@ -163,7 +163,7 @@ const Manager = () => {
           <span className="text-green-700">OP/&gt;</span>
         </h1>
         <p className="text-green-900 text-sm md:text-md lg:text-lg text-center">
-          Your Own password manager
+          Your Own password manager / Demo Page
         </p>
         <div className="flex flex-col p-4 text-black gap-4 items-center w-full">
           <div>{isEditing ? "Edit Your Password" : null}</div>

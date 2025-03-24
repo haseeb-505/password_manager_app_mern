@@ -1,18 +1,23 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Manager from "./components/Manager";
 import Navbar from "./components/Navbar";
+import Home from "./components/Home.jsx";
+import Register from "./components/Register.jsx";
+import Login from "./components/Login.jsx";
+import AddPasswords from "./components/AddPasswords.jsx";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <div className="h-[85vh]">
-        {/* background theme */}
-        <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-        <Manager />
-      </div>
-      <Footer />
-    </>
+    // Wrap the app with Router
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/add-password" element={<AddPasswords />} />
+      </Routes>
+    </Router>
   );
 }
 
