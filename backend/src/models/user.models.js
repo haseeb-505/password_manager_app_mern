@@ -56,8 +56,8 @@ userSchema.methods.isPasswordSame = async function(password){
     if (!this.password) {
         throw new Error("db password is missing")
     }
-    // password comparison
-    return await bcrypt.compare(this.password, password);
+    // password comparison, remember this sequence 
+    return await bcrypt.compare(password, this.password);
 }
 
 // generateAccessToken

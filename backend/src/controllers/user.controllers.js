@@ -50,9 +50,10 @@ const registerUser = asyncHandler(async (req, res) =>{
     // return response
 
     const {username, email, fullName, password} = req.body;
+    // testing on postman with raw json data not with form data
     // check if any of these fields is empyt
     if ([username, email, fullName, password].some( (field) => field?.trim() === "")) {
-        throw new ApiError(400, "Please fill out all the fields")
+        return res.status(400).json({ success: false, message: "Please fill out all the fields" });
     }
     // check if user already exists
     const existingUser = await User.findOne({
@@ -75,13 +76,13 @@ const registerUser = asyncHandler(async (req, res) =>{
     });
     // check if user is created
     if (!user) {
-        throw new ApiError(500, "User couldn't be created successfully")
+        return res.status(500).json({ success: false, message: "User couldn't be created successfully" });
     }
     // save this user without password and refreshToken
     const createdUser = await User.findById(user._id).select("-password -refreshToken");
 
     // send a response to frontend
-    return res.status(202).json(
+    return res.status(201).json(
         new ApiResponse(200, 
             createdUser, 
             `User ${createdUser.username} is created Successfully!!!`
@@ -116,12 +117,12 @@ const loginUser = asyncHandler(async (req, res) => {
         return res.status(403).json({message: "Incorrect passowrd!"})
     }
     // generate access and refresh tokens
-    const [accessToken, refreshToken] = await generateAccessRefreshToken();
+    const [accessToken, refreshToken] = await generateAccessRefreshToken(user._id);
     if (!accessToken || !refreshToken) {
         throw new ApiError(500, "token generation failed")
     }
     // remove user's passowrd and refresh token
-    const loggedInUser = await user.select("-password -refreshToken");
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
 
     const options = {
         httpOnly: true,
