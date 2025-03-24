@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Navbar from "./Navbar";
 
 const ContainerAddPassword = () => {
     const ref = useRef();

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import axiosApi from "../utils/axiosApi.js";
 
 const Login = () => {
 
@@ -19,12 +20,12 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/users/login', 
+            const response = await axiosApi.post('/users/login', 
                 formData, 
                 {headers: { "Content-Type" : "application/json"}}
             );
             if (response.data.success) {
-                console.log("login form data is submitted", response.data)
+                // console.log("login form data is submitted", response.data)
                 toast.success(`${response.data.message}`, {
                         position: "top-right",
                         autoClose: 5000,
@@ -53,7 +54,7 @@ const Login = () => {
             }
         } catch (error) {
             if (error.response) {
-                console.error("login form Server Error: ", error.response.data.message);
+                console.error(`login form Server Error: , ${error.response.data.message}`);
                 toast.error(`login form Error: ${error.response.data.message}`, {
                         position: "top-right",
                         autoClose: 5000,

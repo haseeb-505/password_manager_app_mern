@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import axiosApi from "../utils/axiosApi.js";
 
 const Register = () => {
 
@@ -19,7 +19,7 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/users/register', 
+            const response = await axiosApi.post('users/register', 
                 formData, 
                 {headers: { "Content-Type" : "application/json"}}
             );

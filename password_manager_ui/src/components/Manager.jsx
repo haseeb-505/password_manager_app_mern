@@ -382,6 +382,7 @@ const Manager = () => {
             </div>
           )}
         </div>
+      </div>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -394,7 +395,6 @@ const Manager = () => {
           pauseOnHover
           theme="dark"
         />
-      </div>
     </>
   );
 };
