@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import jwt from "jsonwebtoken";
-import mongooseAggregatePaginate from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const passwordSchema = new Schema({
     site: {
@@ -21,11 +20,12 @@ const passwordSchema = new Schema({
     },
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     }
-},{timestamps: true});
+}, { timestamps: true });
 
-// aggregation paginate
+// Apply aggregation pagination plugin
 passwordSchema.plugin(mongooseAggregatePaginate);
 
 export const PasswordRecord = mongoose.model("PasswordRecord", passwordSchema);

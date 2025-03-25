@@ -25,12 +25,14 @@ app.use(cookierParser());
 
 
 
-// routes import
+// import routes
 import userRouter from "./routes/user.routes.js";
+import passwordRouter from "./routes/password.routes.js";
 
 
 
 // routes path
-app.use("/api/v1/users", userRouter)
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/passwords", passwordRouter);
 
 export {app};
