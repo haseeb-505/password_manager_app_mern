@@ -28,24 +28,14 @@ const Register = () => {
                 console.log("form data is submitted", response.data)
                 toast.success(`${response.data.message}`, {
                         position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
+                        autoClose: 2000,
                         theme: "dark",
                       });
             } else{
                 console.error("Ran into error: ", response.data.message)
                 toast.error(`${response.data.message}`, {
                     position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
+                    autoClose: 2000,
                     theme: "dark",
                   });
             }
@@ -54,24 +44,14 @@ const Register = () => {
                 console.error("Server Error: ", error.response.data.message);
                 toast.error(`Error: ${error.response.data.message}`, {
                         position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
+                        autoClose: 2000,
                         theme: "dark",
                       });
             } else{
                 console.error("Network or Unexpected Error: ", error.message)
                 toast.warn(`Error: ${error.message}`, {
                     position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
+                    autoClose: 2000,
                     theme: "dark",
                   });
             }
@@ -222,7 +202,7 @@ const Register = () => {
       </section>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick={false}

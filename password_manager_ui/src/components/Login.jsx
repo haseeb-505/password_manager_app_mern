@@ -29,7 +29,7 @@ const Login = () => {
                 // console.log("login form data is submitted", response.data)
                 toast.success(`${response.data.message}`, {
                         position: "top-right",
-                        autoClose: 5000,
+                        autoClose: 2000,
                         hideProgressBar: false,
                         closeOnClick: false,
                         pauseOnHover: true,
@@ -44,7 +44,7 @@ const Login = () => {
                 console.error("login form Ran into error: ", response.data.message)
                 toast.error(`${response.data.message}`, {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: false,
                     pauseOnHover: true,
@@ -58,7 +58,7 @@ const Login = () => {
                 console.error(`login form Server Error: , ${error.response.data.message}`);
                 toast.error(`login form Error: ${error.response.data.message}`, {
                         position: "top-right",
-                        autoClose: 5000,
+                        autoClose: 2000,
                         hideProgressBar: false,
                         closeOnClick: false,
                         pauseOnHover: true,
@@ -70,7 +70,7 @@ const Login = () => {
                 console.error("login form Network or Unexpected Error: ", error.message)
                 toast.warn(`login form Error: ${error.message}`, {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: false,
                     pauseOnHover: true,
@@ -205,7 +205,7 @@ const Login = () => {
       </section>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick={false}

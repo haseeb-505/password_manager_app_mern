@@ -34,12 +34,7 @@ const Navbar = () => {
         navigate("/login");
         toast.warn("User logged out successfully!!!", {
           position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "dark",
         });
       }
@@ -103,7 +98,7 @@ const Navbar = () => {
       </div>
       <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick={false}
