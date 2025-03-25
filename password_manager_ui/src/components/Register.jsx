@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import axiosApi from "../utils/axiosApi.js";
+import Navbar from "./Navbar.jsx";
 
 const Register = () => {
 
@@ -87,20 +88,21 @@ const Register = () => {
     
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Navbar/>
       <section className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
         {/* registration form */}
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div className="w-full bg-white rounded-lg shadow dark:border mt-12 md:mt-12 lg:mt-20 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-6 space-y-1 md:space-y-1 sm:p-4">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
             {/* form here */}
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-2 md:space-y-3" onSubmit={handleSubmit}>
               {/* Email Input */}
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Your email
                 </label>
@@ -119,7 +121,7 @@ const Register = () => {
               <div>
                 <label
                   htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Your username
                 </label>
@@ -137,7 +139,7 @@ const Register = () => {
               <div>
                 <label
                   htmlFor="fullName"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Your Full Name
                 </label>
@@ -156,7 +158,7 @@ const Register = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
                 </label>
